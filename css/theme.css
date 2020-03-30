@@ -1,0 +1,25 @@
+div#photos-templete {
+    border: 3px solid #986e9e;
+}
+
+header {
+    font-family: 'Righteous', cursive;
+    background-color: rgb(152, 110, 158);
+
+}
+
+footer {
+    background-color: #986e9e;
+    font-size: 0.8em;
+
+}
+
+footer p{
+    font-size: 21px;
+    color: white;
+}
+
+
+body {
+    background-color: #fff8ff;
+}
