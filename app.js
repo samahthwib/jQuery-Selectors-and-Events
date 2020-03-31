@@ -37,21 +37,6 @@ $.get('./data/page-1.json')//This method for get data from page-1.json
       $('select').append(listClone[0]); //when I try it gave me this exception:Maximum call stack size exceeded 
     });
 
-    //handles option selection event
-    // $('select').change((e) => {
-    //   $('section').each(function() {
-    //     $(this).show();
-    //     if( $(this).attr('id') !== e.target.value) {
-    //       $(this).hide();
-    //     }
-    //     if ( $(this).attr === e.target.value ) {
-    //       $(this).toggle();
-    //     }
-    //     if ( $(this).attr('class') === e.target.value) {
-    //       $(this).toggle();
-    //     }
-    //   });
-    // });
   });
 // console.log(theImages);
 
