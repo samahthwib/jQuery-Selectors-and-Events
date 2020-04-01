@@ -14,44 +14,74 @@ function Images(image_url,title,description,keyword,horns){
 }
 //console.log(keywords);
 
+//   $('#page-one').on('click', pickePageOne); //Attach a click event to the page-one (id) and call the fn
+//   $('#page-two').on('click', pickePageTwo); //Attach a click event to the page-two (id) and call the fn
 
-$.get('./data/page-1.json')//This method for get data from page-1.json
-  .then (data => {
-    console.log(data);
-    data.forEach((val) => {
+
+//   let pageOne=$.get('./data/page-1.json');
+//   let pageTwo=$.get('./data/page-2.json');
+
+//   // when the user press on the buttons will come here
+//   //the user will goes to the page depends on what he press
+//   let pickePageOne= () => {
+
+//     $('section').hide(); //when he press on the button.firstly, will remove the template
+//     getJsonPage(pageOne); //call this function to display the json file
+//   };
+
+//   let pickePageTwo = () => {
+//     $('section').hide();
+//     getJsonPage(pageTwo);
+//   };
+
+
+const jsonFile = () => {
+  $.get('./data/page-1.json')//This method for get data from page-1.json
+    .then (data => {
+      console.log(data);
+      data.forEach((val) => {
       // console.log(val); will give me the objects from 0 to 19
 
-      let img= new Images(val.image_url,val.title,val.description,val.keyword,val.horns); //I create a new obj unsing constructor
-      //console.log(img);
-      img.renderImage();//for feature one I want to render just these properties
+        let img= new Images(val.image_url,val.title,val.description,val.keyword,val.horns); //I create a new obj unsing constructor
+        //console.log(img);
+        img.render();//for feature one I want to render just these properties
+
+      });
+
+      renderList();
+      filterTheKeyword();
 
     });
-
-    renderList();
-    filterTheKeyword();
-    //this iteration for the list
-    // keywords.forEach((value) => {
-
-    //   let listClone = $('option').clone();
-
-    //   listClone.find('value').attr(value);
-    //   listClone.text(value);
-    //   console.log(listClone);
-    //   $('select').append(listClone[0]); //when I try it gave me this exception:Maximum call stack size exceeded
-    // });
-
-  });
 // console.log(theImages);
+};
 
-Images.prototype.renderImage=function(){
-  let imgClone = $('#photos-templete').clone();
-  //console.log(imgClone.html());
+jsonFile();
 
-  imgClone.find('h2').text(this.title);//here i use find method to find h2 tag then return the content
-  imgClone.find('img').attr('src', this.image_url);
-  imgClone.find('p').text(this.description);
-  imgClone.attr('class', this.keyword);
-  $('#container').append(imgClone);//I should append it to the parent
+
+//   function getJsonPage(ourPages){ //this function for the two pages
+
+//     $.get(ourPages)//This method for get data from page-1.json
+//       .then (data => {
+//         data.forEach((val) => {
+//           // console.log(val); will give me the objects from 0 to 19
+
+//           let img= new Images(val.image_url,val.title,val.description,val.keyword,val.horns); //I create a new obj unsing constructor
+//           //console.log(img);
+//           img.renderImage();//for feature one I want to render just these properties
+
+//         });
+
+//         renderList();
+//         filterTheKeyword();
+//       });
+
+
+
+Images.prototype.render=function(){
+  let imgTemplate = $('horns-template');
+  var html = Mustache.render(imgTemplate,this);
+  $('#photos-templete').append(html);
+
 }
 
 function renderList(){
@@ -80,13 +110,11 @@ function filterTheKeyword(){
     console.log(this);
     let selected = $(this).val()
 
-    // $(`.${selected}`).fadeIn();
+   $(`.${selected}`).fadeIn();
 
-    theImages.forEach(val=>{
-      if(val.keyword === selected){
-        $(`section[class='${selected}']`).fadeIn();
-      }
-
-    })
   });
 }
+
+
+
+
