@@ -15,16 +15,15 @@ function Images(image_url,title,description,keyword,horns){
 //console.log(keywords);
 
 
-$.get('./data/page-1.json')//This method for get data from page-1.json
+$.get('./data/page-1.json')//This method for get data from page-1.json after i get the data then do the fn
   .then (data => {
-    console.log(data);
-    data.forEach((val) => {
+    console.log(data); // will give me the arr of objects on the json file 
+    data.forEach(val => { //for loop through the data array
       // console.log(val); will give me the objects from 0 to 19
-
       let img= new Images(val.image_url,val.title,val.description,val.keyword,val.horns); //I create a new obj unsing constructor
-      //console.log(img);
+      // console.log(img);
       img.renderImage();//for feature one I want to render just these properties
-
+      
     });
 
     renderList();
@@ -44,8 +43,9 @@ $.get('./data/page-1.json')//This method for get data from page-1.json
 // console.log(theImages);
 
 Images.prototype.renderImage=function(){
+
   let imgClone = $('#photos-templete').clone();
-  //console.log(imgClone.html());
+  console.log(imgClone.html());
 
   imgClone.find('h2').text(this.title);//here i use find method to find h2 tag then return the content
   imgClone.find('img').attr('src', this.image_url);
@@ -75,11 +75,11 @@ function renderList(){
 
 function filterTheKeyword(){
 
-  $('select').on('change',function(){
+  $('select').on('change',function(){ // when I click on the select item will hide the imgs
     $('section').hide();
-    console.log(this);
+    console.log(this); //will give me the structure of html for the keyword that i clicked on it
     let selected = $(this).val()
-
+    console.log(selected); //will give me the value for every click option
     // $(`.${selected}`).fadeIn();
 
     theImages.forEach(val=>{
