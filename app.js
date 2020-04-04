@@ -14,36 +14,41 @@ function Images(image_url,title,description,keyword,horns){
 }
 //console.log(keywords);
 
-//   $('#page-one').on('click', pickePageOne); //Attach a click event to the page-one (id) and call the fn
-//   $('#page-two').on('click', pickePageTwo); //Attach a click event to the page-two (id) and call the fn
 
 
-//   let pageOne=$.get('./data/page-1.json');
-//   let pageTwo=$.get('./data/page-2.json');
+myJsonFile('data/page-1.json');
 
-//   // when the user press on the buttons will come here
-//   //the user will goes to the page depends on what he press
-//   let pickePageOne= () => {
-
-//     $('section').hide(); //when he press on the button.firstly, will remove the template
-//     getJsonPage(pageOne); //call this function to display the json file
-//   };
-
-//   let pickePageTwo = () => {
-//     $('section').hide();
-//     getJsonPage(pageTwo);
-//   };
+let pageOne='data/page-1.json';
+let pageTwo='data/page-2.json';
 
 
-const jsonFile = () => {
-  $.get('./data/page-1.json')//This method for get data from page-1.json
+
+let pickePageTwo = () => {
+  $('section').hide();
+  myJsonFile(pageTwo);
+};
+
+$('#page-one').on('click', pickePageOne); //Attach a click event to the page-one (id) and call the fn
+$('#page-two').on('click', pickePageTwo); //Attach a click event to the page-two (id) and call the fn
+
+
+// when the user press on the buttons will come here
+//the user will goes to the page depends on what he press
+function pickePageOne() {
+  $('section').hide(); //when he press on the button.firstly, will remove the template
+  myJsonFile(pageOne); //call this function to display the json file
+}
+
+
+
+function myJsonFile (ourPages){
+  $.get(ourPages)//This method for get data from page-1.json
     .then (data => {
-      console.log(data);
+      // console.log(data);
       data.forEach((val) => {
       // console.log(val); will give me the objects from 0 to 19
-
         let img= new Images(val.image_url,val.title,val.description,val.keyword,val.horns); //I create a new obj unsing constructor
-        //console.log(img);
+        // console.log(img);
         img.render();//for feature one I want to render just these properties
 
       });
@@ -52,34 +57,16 @@ const jsonFile = () => {
       filterTheKeyword();
 
     });
-// console.log(theImages);
-};
+  // console.log(theImages);
 
-jsonFile();
-
-
-//   function getJsonPage(ourPages){ //this function for the two pages
-
-//     $.get(ourPages)//This method for get data from page-1.json
-//       .then (data => {
-//         data.forEach((val) => {
-//           // console.log(val); will give me the objects from 0 to 19
-
-//           let img= new Images(val.image_url,val.title,val.description,val.keyword,val.horns); //I create a new obj unsing constructor
-//           //console.log(img);
-//           img.renderImage();//for feature one I want to render just these properties
-
-//         });
-
-//         renderList();
-//         filterTheKeyword();
-//       });
+}
+myJsonFile();
 
 
 
 Images.prototype.render=function(){
-  let imgTemplate = $('horns-template');
-  var html = Mustache.render(imgTemplate,this);
+  let imgTemplate = $('#horns-template').html();
+  let html = Mustache.render(imgTemplate,this);
   $('#photos-templete').append(html);
 
 }
@@ -110,11 +97,7 @@ function filterTheKeyword(){
     console.log(this);
     let selected = $(this).val()
 
-   $(`.${selected}`).fadeIn();
+    $(`.${selected}`).fadeIn();
 
   });
 }
-
-
-
-
